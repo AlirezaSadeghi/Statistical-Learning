@@ -29,8 +29,8 @@ which for all values of $p \geq 1$ is a valid metric function.
 \subsubsection{Convergence \& Continuity}
 There are different ways for defining convergence, we follow \cite{pough} and use sequence/subsequence approach. A sequence $(p_n)$ is a list of points $p_1, p_2, \ldots$ in $M$. Formaly, a sequence is a function $f: \mathbb{N} \to M $ in which $f(n) = p_n$. The sequence $(p_n)$ {\bf converges to the limit} $p$ in $M$ if:
 \begin{align*}
-& \forall \epsilon > 0 \quad \exists N \in \mathbb{N} \quad \text{such that} \\
-& n \geq N \Rightarrow d(p_n, p) < \epsilon
+\forall \epsilon > 0 \quad \exists N \in \mathbb{N} \quad \text{such that} \\
+n \geq N \Rightarrow d(p_n, p) < \epsilon
 \end{align*}
 \subsubsection{Topology of Metric Space} \label{topology1}
 
