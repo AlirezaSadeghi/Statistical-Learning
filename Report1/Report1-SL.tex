@@ -4,7 +4,7 @@
 \title{Statistical Machine Learning \\ Reading Assignment 1 Report}
 
 \author{Alireza Sadeghi - Mohsen Shojaee}
-
+\newtheorem{theorem}{Theorem}
 \begin{document}
 
 \maketitle
@@ -27,14 +27,40 @@ d_p(x,y) = \big ( \sum_{i=1}^n (x_i - y_i)^p \big )^{1/p}
 which for all values of $p \geq 1$ is a valid metric function.
 
 \subsubsection{Convergence \& Continuity}
-There are different ways for defining convergence, we follow \cite{pough} and use sequence/subsequence approach. A sequence $(p_n)$ is a list of points $p_1, p_2, \ldots$ in $M$. Formaly, a sequence is a function $f: \mathbb{N} \to M $ in which $f(n) = p_n$. The sequence $(p_n)$ {\bf converges to the limit} $p$ in $M$ if:
+There are different ways for defining convergence, we follow \cite{pough} and use sequence/subsequence approach. A sequence $(p_n)$ is a list of points $p_1, p_2, \ldots$ in $M$. Formaly, a sequence is a function $f: \mathbb{N} \to M $ in which $f(n) = p_n$. The sequence $(p_n)$ {\bf converges to the limit} $p$ in $M$ (and denote this by $(p_n) \to p$ if:
 \begin{align*}
 & \forall \epsilon > 0 \quad \exists N \in \mathbb{N} \quad \text{such that} \\
 & n \geq N \Rightarrow d(p_n, p) < \epsilon
 \end{align*}
+Having defined convergence, contiuity can be described: For a function $f: M \to N$ between two metric spaces $(M, d_M)$ and $(N, d_N)$, we say that function is continous if it preserves sequential convergence, that is if $(p_n) \to p$ then $(f(p_n)) \to f(p)$.
+
+The sequence definitation of continiutity stated above is equivalent with the more familiar definiation using $(\epsilon, \delta)$ condition: 
+\begin{theorem}
+$f:M \to N$ is continouts if and only if for each $\epsilon >0$ and $ p \in M$ there exisits $\delta > 0$ such $\forall x \in M : \quad d_M(x,p) < \delta \Rightarrow d_N(f(x), f(p)) < \epsilon$
+\end{theorem}
 \subsubsection{Topology of Metric Space} \label{topology1}
+Althogh topology can be defined on non-metric spaces (as we will do so in the next section) there is a \textit{natural} topology induced on metric spaces induced by the distance function. To this end we need to define notion of {\bf openness} and {\bf closeness} based metric and convergences. We say that point $p \in M$ is a limit of $S \subset M$ if there exists a  sequence in $S$ like $(p_n)$ that $(p_n) \to p$
+
+{\bf Closeness:} $S$ is a closed set if it contains all it limits. 
+{\bf Openness:} $S$ is an open set if for each $p \in S$, $r>0$ exists such that 
+\[
+d(p,q) <r \Rightarrow q \in S.$
+\]
+that is for each point in $S$ an small ball around it is also in $S$.
+
+One can simply prove that complement of an open set is closed and vice versa. However (like doors) sets can be neighter open nor closed and unlike doors they can be both at the same time. 
+
+\begin{theorem}\label{topdef}
+	Now the collection $\mathcal{T}$ of all open sets of $M$ is the topolgy of $M$, i.e. is satisfies the following three properties:
+	\begin{itemize}
+	\item $M, \Phi \in \mathcal{T}$ 
+	\item The intersection of finitely many open sets is an open set	
+	\item The union of arbitrarily many open sets is an open set. 
+\end{itemize}
+\end{theorem}
 
 \subsection{Topology: a More General Perspective} \label{topology2}
+The three properties stated in \ref{topdef} are the definiation of topology, one can {\it handcraft} a collection $\mathcal{T}$  that satisfies these properties and call it the collection of open sets of $M$, even if they does not satisfy the definiation of openness based on metric or even $M$ is not a metric space at all. 
 
 \section{Theory of Probability}
 
