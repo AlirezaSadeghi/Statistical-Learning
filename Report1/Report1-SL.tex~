@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\title{Statistical Machine Learning \\ Reading Assignment 1 Report}
+
+\author{Alireza Sadeghi - Mohsen Shojaee}
+\newtheorem{theorem}{Theorem}
+\begin{document}
+
+\maketitle
+    
+\section{A Taste of Real Analysis}
+Real Analysis is the field of mathematics on which probability theory is founded, it is therefore convinient to first introduce some basic concepts from real analysis. We begin the this chapter with the definiation of metric space and use the notion of metric to define two core concepts: convergence and continuity. In  \ref{topology1} we revie the natural topoly defined on a metric space based on the metric function and then in \ref{topology2} we provide a more general view of topological spaces. 
+\subsection{Metric Space}
+A metric space is a set $M$ together with a metric $d: M \times M \to \mathcal{R}$ satisfying following four properties
+\begin{itemize}
+\item d is non-negative
+\item $d(x,y)=0$ iff $x=y$
+\item Symmetry: $d(x,y) = d(y,x)$
+\item Triangle Inequality: $d(x,z) \leq d(x,y) + d(y,z) $
+\end{itemize}
+
+Strictly speaking, the pair $(M,d)$ is the metric space as different metric functions can be defined on same $M$, consider for example $\mathcal{R}^n$; a well-known class of metrics defined on $\mathcal{R}^n$ is \textbf{Minkowski Norm}:
+\[
+d_p(x,y) = \big ( \sum_{i=1}^n (x_i - y_i)^p \big )^{1/p}
+\]
+which for all values of $p \geq 1$ is a valid metric function.
+
+\subsubsection{Convergence \& Continuity}
+There are different ways for defining convergence, we follow \cite{pough} and use sequence/subsequence approach. A sequence $(p_n)$ is a list of points $p_1, p_2, \ldots$ in $M$. Formaly, a sequence is a function $f: \mathbb{N} \to M $ in which $f(n) = p_n$. The sequence $(p_n)$ {\bf converges to the limit} $p$ in $M$ (and denote this by $(p_n) \to p$ if:
+\begin{align*}
+& \forall \epsilon > 0 \quad \exists N \in \mathbb{N} \quad \text{such that} \\
+& n \geq N \Rightarrow d(p_n, p) < \epsilon
+\end{align*}
+Having defined convergence, contiuity can be described: For a function $f: M \to N$ between two metric spaces $(M, d_M)$ and $(N, d_N)$, we say that function is continous if it preserves sequential convergence, that is if $(p_n) \to p$ then $(f(p_n)) \to f(p)$.
+
+The sequence definitation of continiutity stated above is equivalent with the more familiar definiation using $(\epsilon, \delta)$ condition: 
+\begin{theorem}
+$f:M \to N$ is continouts if and only if for each $\epsilon >0$ and $ p \in M$ there exisits $\delta > 0$ such $\forall x \in M : \quad d_M(x,p) < \delta \Rightarrow d_N(f(x), f(p)) < \epsilon$
+\end{theorem}
+\subsubsection{Topology of Metric Space} \label{topology1}
+
+
+\subsection{Topology: a More General Perspective} \label{topology2}
+
+\section{Theory of Probability}
+
+\subsection{Measure Theory}
+
+\subsection{Measurable Functions}
+
+\subsection{Absolute Continuity}
+
+\subsection{Mathematical Probability}
+
+\subsection{Random Variable}
+
+\subsection{Conditioning}
+
+\section{Stochastic Processes}
+
+\subsection{Definition}
+
+\subsection{Random Functions}
+
+\end{document}
