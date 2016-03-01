@@ -44,7 +44,7 @@ Althogh topology can be defined on non-metric spaces (as we will do so in the ne
 {\bf Closeness:} $S$ is a closed set if it contains all it limits. 
 {\bf Openness:} $S$ is an open set if for each $p \in S$, $r>0$ exists such that 
 \[
-d(p,q) <r \Rightarrow q \in S.$
+d(p,q) <r \Rightarrow q \in S.
 \]
 that is for each point in $S$ an small ball around it is also in $S$.
 
@@ -84,14 +84,33 @@ If \textit{f} is measurable, one-to-one and onto, and $f^-1$ is also measurable,
 
 \subsection{Mathematical Probability}
 
-\subsection{Random Variable}
+If we'd want to define probability with a measure theoretic approach, we'd say that a measure space \textit{(S, A, $\mu$)} is a probability space and $\mu$ is a probability if $\mu(S) = 1$. We call each element of \textit{A} an \textit{event}, and a measurable function \textit{X} from \textit{S} to some other space \textit{X, B} is called a random quantity.
 
-\subsection{Conditioning}
+When \textit{X} is $\Re$ with the \textit{Borel $\sigma$-field}, this random quantity is called a \textit{Random Variable}. The probability measure $\mu_x$ induced on \textit{(X, B}} by X from $\my$ is called the \textit{distribution} of X. The expected value or mean 
 
 \section{Stochastic Processes}
 
 \subsection{Definition}
 
+A stochastic process {X_t}_$t \in T$ is a collection of random variables X_t, taking values in a common measure space (S, X), indexed by a set T.
+
+This definition means that for each $t \in T$, $X_t(\omega)$ is an S \rightarrow X-measurable function from $\Omega$ to S, which yields a probability on S.
+
+Some examples of stochastic processes are as follows:
+
+\begin{itemize}
+    \item Every random variable is a trivial stochastic process.
+    \item Let $T = {1, 2, \cdots, k}$ and $S = \Re$. Then {X_t}_$t \in T$ is a random vector in $\Re^k$.
+    \item One-sided random sequence, in which we define T to be {1, 2, \cdots}.
+    \item Two-sided random sequences, in which we define T to be \mathbb{Z}.
+    \item Spatially-discrete random fields, in which we let T to be $\mathcal{Z}$.
+    \item 
+and some other types.
+\end{itemize}
+
 \subsection{Random Functions}
+
+$X(t, \omega)$ has two arguments, t and $\omega$. If we fix the value of t, X_t($\omega$ is a random variable. For each fixed value of $\omega$ though, X(t) is a function from T to S, we call it a random function.
+
 
 \end{document}
