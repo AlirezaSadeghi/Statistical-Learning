@@ -1,0 +1,39 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\title{Statistical Machine Learning \\ Reading Assignment 1 Report}
+
+\author{Alireza Sadeghi - Mohsen Shojaee}
+\newtheorem{theorem}{Theorem}
+\begin{document}
+
+\maketitle
+    
+\section{Poisson Process}
+\subsection{Introduction}
+
+As we've seen earlier, formal definition of probability is a triple $P: (\Omega, \mathcal{F}, \mathbb{P})$, in which $\Omega$ denotes the sample space, $\mathcal{F}$ denotes a $\sigma$-field over $\Omega$ consisting of the desired events and finally, $\mathbb{P}$ denotes a measure over the $\sigma$-field  $\mathcal{F}$.
+A random X variable is also defined as follows: $$ X: \Omega \rightarrow \mathbb{R} $$
+To be more implicit, a random variable X is defined as a measurable function over the desired $\sigma-field$, mapping events to real numbers, such that the following holds: $$ \forall x: \{\omega|X(\omega) \leq x \} \in \mathcal{F}$$
+
+\subsection{Random Process}
+
+A random process can be implicitly defined as follows: $$ \Pi: \Omega \rightarrow S^\infty $$
+S is the state space, which in most cases, considered to be the same as $\mathbb{R}^n$, and $S^\infty$ denotes the collection of all countable subsets of S.
+In most real world cases, we are not interested in all subsets of S, instead we're interested in a smaller collections which we call \textit{Test Sets}. Test sets usually is considered to be all open intervals in $\mathbb{R}^n$. 
+
+Since we are often interested in counting the occurrences of events in a specific interval, we move on to define a counting measure N over test sets:
+$$ N(A) = \# \{\Pi(\omega) \cap A\} $$
+N(A) counts the number of occurrences of the process points in a test set A. It's important to notice, that N(A) is a random variable, mapping outcomes in $\Omega$ to non-negative integers. This drills down to N(A) being a measurable function defined as follows:
+$$ \forall n: \{ \omega | N(A)=n\} \in \mathcal{F}$$ 
+If for a random process $\Pi$, the resulted N(A) over test sets, follows a Poisson distribution and for every non-overlapping test sets A, B we have that random variables N(A) and N(B) are independent, $\Pi$ is called a \textit{Poisson process}.
+
+It's important to notice that there are several other ways of defining a Poisson process, such as taking the distribution of inter arrival times to be of the Geometric distribution (Notice that in this case, we focus on inter event times instead of the points themselves).
+
+\subsection{Poisson Process}
+
+A Poisson process is a random process, parametrized by a deterministic measure on state space S. Notice that a random process is itself a random measure on S, 
+
+
+
+\end{document}
