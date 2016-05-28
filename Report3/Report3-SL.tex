@@ -40,7 +40,7 @@ give some insights about capabilities and shortcomings of Dirichlet Process i.e.
 A k-dimensional Dirichlet distribution is essentially a distribution over all probability measures on k possible outcomes.
 For Example a 6-dimensional Dirichlet can be used to model the probability distribution of dices.
 The formal definition is as follows.
-Let $X_1, X_2, \ldots, \X_k$ be Gamma random variables with parameter $(\alpha_i, 1)$. A Dirichlet distribution with
+Let $X_1, X_2, \ldots, X_k$ be Gamma random variables with parameter $(\alpha_i, 1)$. A Dirichlet distribution with
 parameter $(\alpha_1, \ldots, \alpha_n)$  is defined as distribution of $ Y = (Y_1, \ldots, Y_n)$, where
 \begin{equation}
   Y_i = \frac{Z_i}{\sum_{i=1}^k Z_j}
@@ -48,13 +48,13 @@ parameter $(\alpha_1, \ldots, \alpha_n)$  is defined as distribution of $ Y = (Y
 As can be seen in the above equation, $Y$ will lie on the $k-$simplex;
 thus interpreted as a probability distribution over a sample space with $k$ members.
 
-\subsection{Dirichlet Process}
+\section{Dirichlet Process}
 We now turn to definition of Dirichlet process. Let $ \mathcal{X}$  be a measurable space
 and $ \mathcal{X} $  a $\sigma-$field on it. The process is defined by specifying the joint distribution of any
 Sequence $A_1, \ldots, A_n \in \mathcal{A}$.
 
 To this end, it is sufficient to specify the distribution on every measurable portioning $B_1, \ldots, B_n$.
-(We say portioning $(B_1, \ldots, B_n)$ to be measurable if $\forall i,j: B_i \in \mathcal{A}$ and $B_i \cap \B_j = \Phi$ and $\union_{j=1}^n B_j = \mathcal{X}$ )
+(We say portioning $(B_1, \ldots, B_n)$ to be measurable if $\forall i,j: B_i \in \mathcal{A}$ and $B_i \cap B_j = \Phi$ and $\bigcup{j=1}^n B_j = \mathcal{X}$ )
 From these distributions the distribution for arbitrary sequence $A_1, \ldots, A_n \in \mathcal{A}$ can be uniquely determined.
 We are almost ready to give a formal definition for Dirichlet distribution, it only remains
 the parameter of the process which should be a non-null finite measure on $\mathcal{X}$. We use $\alpha$ to denote the parameter.
@@ -79,7 +79,6 @@ Then conditional distribution of $P$ given $ X_1, \ldots , X_n$, is a Dirichlet 
 
 
 
-\section{Dirichlet Process}
 
 \section{Sampling}
 
@@ -87,9 +86,9 @@ Let $y$ denote the observations or data, and let $\theta$ denote the parameter o
 
 From the posterior density one may extract any information, not simply "the most likely value" of a parameter, as with maximum likelihood (ML) estimators. However, until the advent of Monte Carlo Markov Chain methods it was not straightforward to sample from the posterior density, except in cases where it was analytically defined. Monte Carlo Markov Chain (MCMC) methods are iterative sampling methods that allow sampling from the posterior distribution, meaning $p(\theta|y)$.
 
-Although MCMC methods can be encompassed within the broad class of \textit{Monte Carlo} methods, they must be distinguished from conventional Monte Carlo methods that generate independent simulations $\{ u_(1), u_(2), \ldots u_(T) \}$ from a target density $\pi(u)$. From such simulations the expectation of a function $g(u)$ under $\pi(u)$, namely 
-    $$ \mathbb{E}_{\pi}[g(u)] = \int{g(u)\pi(u)du}$$ 
-    is estimated by taking the average of the function $g(y)$ evaluated at the sampled $u^{t}$, namely 
+Although MCMC methods can be encompassed within the broad class of \textit{Monte Carlo} methods, they must be distinguished from conventional Monte Carlo methods that generate independent simulations $\{ u_(1), u_(2), \ldots u_(T) \}$ from a target density $\pi(u)$. From such simulations the expectation of a function $g(u)$ under $\pi(u)$, namely
+    $$ \mathbb{E}_{\pi}[g(u)] = \int{g(u)\pi(u)du}$$
+    is estimated by taking the average of the function $g(y)$ evaluated at the sampled $u^{t}$, namely
     $$ \mathbb{E} = \sum_{t=1}^{T} g(u^{(t)})/T $$
 
 Under independent sampling the Monte Carlo estimator \textit{g} tends to $\mathbb{E}_{\pi}[g(u)]$ as $T \rightarrow \infty$.
@@ -99,28 +98,28 @@ When suitably implemented, MCMC methods offer an effective way to generate sampl
 
 \subsection{Forward Sampling in Bayesian Networks}
     Our goal in forward sampling is to compute the marginalized probability distribution over the desired random variable. So our goal is to compute terms of the form $p(Y=y)$. In order to do so, we generate samples from the Bayesian Network and then compute the fraction in which $Y=y$.
-    
+
     Sampling from a Bayesian Network is done in a top-down manner. We start from the root nodes (nodes that have no parents associated with them), and sample each variable from a node's CPD (conditional probability distribution). We then move down the Bayesian Network, sampling subsequent nodes, with respect to the previously sampled parents. Upon getting to the bottom of the graphical model, we have successfully sampled a full realization of the join distribution of parameters. This process can be repeated to generate more samples and thus arrive at more accurate estimates of our favored distribution.
 
     With a little help from the discipline of \textit{Learning Theory}, we can introduce several interesting bounds on the number of samples, required to estimate the value of a parameter, while satisfying specific precision requirements. Two of the most important bounds are:
-    
+
     \begin{itemize}
         \item \textit{Hoeffding's Bound (Additive)}
             \begin{equation}
-                P_D (T_D \notin [p-\epsilon, p+\epsilon]) \leq 2e^{-2M\epsilon^2}                
+                P_D (T_D \notin [p-\epsilon, p+\epsilon]) \leq 2e^{-2M\epsilon^2}
             \end{equation}
             \begin{equation}
-                M \geq \frac{\ln(2/\delta)}{2\epsilon^2}  
+                M \geq \frac{\ln(2/\delta)}{2\epsilon^2}
             \end{equation}
         \item \textit{Chernoff's Bound (Multiplicative)}
             \begin{equation}
-                P_D (T_D \notin [p(1-\epsilon), p(1+\epsilon)]) \leq 2e^{-Mp\epsilon^2/3}                                        
+                P_D (T_D \notin [p(1-\epsilon), p(1+\epsilon)]) \leq 2e^{-Mp\epsilon^2/3}
             \end{equation}
             \begin{equation}
-                M \geq 3\frac{\ln(2/\delta)}{p\epsilon^2}                  
-            \end{equation}            
+                M \geq 3\frac{\ln(2/\delta)}{p\epsilon^2}
+            \end{equation}
     \end{itemize}
-    
+
     Where in both bounds, $M$ is the number of samples, $\delta$ is equal to the right hand side of the (1) and (3) inequalities and $T_D$ is the estimator for the parameter.
 
 
@@ -128,9 +127,9 @@ When suitably implemented, MCMC methods offer an effective way to generate sampl
     Our goal in rejection sampling is to compute the marginalized probability distribution over a desired random variable, while taking into account and observed evidence, so our goal actually is to compute terms of the form $P(Y=y | E=e)$.
 
     When we have some evidence and we want to do queries with respect to those evidences, we need to take a slightly different approach. The approach we take in this configuration of the problem is called \textit{Rejection Sampling}.
-    
+
     In rejection sampling, we start by sampling the Bayesian Network exactly as we did in normal forward sampling, and finish by computing the fraction where $Y=y$. The only difference is that we throw away all those samples that conflicts our observed evidence.
-    
+
     As obvious, in this case more computational power is required since the number of required samples grows exponentially with the number of observed variables. (since we're keeping a sample with only probability p(e)).
 
 \subsection{Markov Chain}
@@ -145,10 +144,13 @@ $$ \forall x: \sum_{x'} T(x \rightarrow x') = 1$$
     $$ P(X_{n+m}=j|X_n=i \quad and \quad A) = P(X_{n+m}=j|X_n=i)$$
 
 \subsubsection{Temporal Dynamics}
-    The probability of being in state $x'$ at the time step $t+1$, is the sum over all states, from which one can get to $x'$, multiplied by the probability of the transition occurring, namely, 
+    The probability of being in state $x'$ at the time step $t+1$, is the sum over all states, from which one can get to $x'$, multiplied by the probability of the transition occurring, namely,
 $$ P^{(t+1)}(X^{(t+1)} = x') = \sum_x P^{(t)}(X^{(t)} = x)T(x \rightarrow x')$$
 
 \subsubsection{Stationary Distribution}
+
+\section{MCMC for Dirichlet Process Mixtures }
+In this section we review three MCMC Sampling Algorithms for Dirichlet Process from \cite{neal}.
 
 
 \section{Gaussian Process}
