@@ -148,11 +148,70 @@ $$ \forall x: \sum_{x'} T(x \rightarrow x') = 1$$
 $$ P^{(t+1)}(X^{(t+1)} = x') = \sum_x P^{(t)}(X^{(t)} = x)T(x \rightarrow x')$$
 
 \subsubsection{Stationary Distribution}
+    Ultimately, as the process evolves, the probability distribution nearly equalizes. Meaning: $$ P^(t) (x') = p^(t+1)(x') = \sum_x P^{(t)}(x)T(x \rightarrow x')$$
+    So, we introduce a notion of a \textit{Stationary Distribution} as follows $$ \pi(x') = \sum_x \pi(x)T(x \rightarrow x')$$
+    But not all Markov Chains converge to a stationary distribution, actually only \textit{Regular Markov Chains} will eventually arrive at a stationary distribution. We define a Markov chain to be \textit{Regular} in case there exists a k, such that, for every x, x', the probability of getting from x to x' in exactly k steps is a $ > 0$. If this condition holds, we know that the Markov chain converges to a unique stationary distribution regardless of the start state. A Markov chain is regular if both the following conditions hold (Sufficient conditions):
+    
+    \begin{itemize}
+        \item Every two states are connected
+        \item For every state, there exists a self-transition
+    \end{itemize}
+            
+\subsubsection{MCMC}
+    Our goal using sampling, as explained before is to find the probability distribution $P(X \in S)$ when P is too hard to be compute analytically or to sample directly from. In this case we construct a Markov chain, whose unique stationary distribution is P. Since we only want to use samples that are sampled from a distribution close to P, we only start collecting samples after the chain has run long enough to be \textit{mixing}. So in summary:
+    
+    \begin{itemize}
+        \item For $c=1, \ldots, C$
+        \begin{itemize}
+            \item Sample $X^{(c, 0)}$ from $P^{(0)}$
+        \end{itemize}
+        \item Repeat until mixing
+        \begin{itemize}
+            \item For $c=1, \ldots, C$
+            \begin{itemize}
+                \item Generate $X^{(c, t+1)}$ from $T(x^{(c, t)} \rightarrow x')$
+            \end{itemize}
+            \item Compare window statistics in different chains to determine mixing (It's a heuristic method to check whether the Markov chain has started to mix)
+            \item $t=t+1$
+        \end{itemize}
+    \end{itemize}
+    
+    Now we know the Markov chain is mixing (we have transitioned in the Markov chain long enough to be sure we've reached its stationary distribution) and with that, we do actual MCMC as follows:
+    
+    \begin{itemize}
+        \item Repeat until sufficient samples are obtained
+        \begin{itemize}
+            \item $D = \emptyset$
+            \item For $c=1, \ldots, C$
+            \begin{itemize}
+                \item Generate $X^{(c, t+1)}$ from $T(x^{(c, t)} \rightarrow x')$
+                \item $D = D \bigcup {X^{(c, t+1)}}$
+            \end{itemize}
+            \item $t = t+1$
+        \end{itemize}
+        \item Let $D = {x[1], \ldots, x[M]}$
+        \item Estimate $E_P[f] = \frac{1}{M}\sum_{m=1}^M f(x[m])$
+    \end{itemize}
+
+\subsection{Summary of MCMC}
+\begin{itemize}
+    \item Pros:
+    \begin{itemize}
+        \item Very general purpose
+        \item Often easy to implement
+        \item Good theoretical guarantees when $t \rightarrow \infty$
+    \end{itemize}
+    \item Cons:
+    \begin{itemize}
+        \item Lots of tunable parameters / design choices
+        \item Can be quite slow to converge
+        \item Difficult to tell whether it's working (detecting mixing)
+    \end{itemize}
+\end{itemize}
 
 \section{MCMC for Dirichlet Process Mixtures }
 In this section we review three MCMC Sampling Algorithms for Dirichlet Process from \cite{neal}.
 
 
-\section{Gaussian Process}
 
 \end{document}
