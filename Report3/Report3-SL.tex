@@ -8,18 +8,81 @@
 
 \newtheorem{prop}{property}
 
-\author{Alireza Sadeghi - Mohsen Shojaee}
+\author{Alireza Sadeghi - Seyed Mohsen Shojaee}
 
 \begin{document}
 
 \maketitle
-    
+
 \section{Introduction}
+The Bayesian approach to statistical problems has yielded very promising results. However in the context
+of nonparametric problem is has been quite unsuccessful. One reason for this problem is the unsatisfied need for a manageable prior.
+There are two essential properties for a prior distribution to work well in a nonparametric setting.
+The Bayesian approach to statistical problems has yielded very promising results. However in the context
+of nonparametric problem is has been quite unsuccessful. One reason for this problem is the unsatisfied need for a manageable prior.
+There are two essential properties for a prior distribution to work well in a nonparametric setting.
+\begin{itemize}
+  \item The support of prior should be large to allow for many possible posteriors.
+\item Posterior on observed data should be manageable analytically.
+\end{itemize}
+Dirichlet distribution introduced in \cite{fegusen} a prior
+(probably the first one) for which the two properties above are simultaneously satisfied.
+
+There are two alternate ways to define Dirichlet process. One by
+describing the distribution on any finite subset and rely on
+Kolmogorov's consistency theorem for the existence of the process.
+The second way is by generalizing Dirichlet distribution to infinite dimension.
+
+In this section, we first review the Dirichlet distribution. Then we provide two formal definitions and finally
+give some insights about capabilities and shortcomings of Dirichlet Process i.e. the problems it can and can not model.
+
+\subsection{Dirichlet Distribution}
+A k-dimensional Dirichlet distribution is essentially a distribution over all probability measures on k possible outcomes.
+For Example a 6-dimensional Dirichlet can be used to model the probability distribution of dices.
+The formal definition is as follows.
+Let $X_1, X_2, \ldots, \X_k$ be Gamma random variables with parameter $(\alpha_i, 1)$. A Dirichlet distribution with
+parameter $(\alpha_1, \ldots, \alpha_n)$  is defined as distribution of $ Y = (Y_1, \ldots, Y_n)$, where
+\begin{equation}
+  Y_i = \frac{Z_i}{\sum_{i=1}^k Z_j}
+\end{equation}
+As can be seen in the above equation, $Y$ will lie on the $k-$simplex;
+thus interpreted as a probability distribution over a sample space with $k$ members.
+
+\subsection{Dirichlet Process}
+We now turn to definition of Dirichlet process. Let $ \mathcal{X}$  be a measurable space
+and $ \mathcal{X} $  a $\sigma-$field on it. The process is defined by specifying the joint distribution of any
+Sequence $A_1, \ldots, A_n \in \mathcal{A}$.
+
+To this end, it is sufficient to specify the distribution on every measurable portioning $B_1, \ldots, B_n$.
+(We say portioning $(B_1, \ldots, B_n)$ to be measurable if $\forall i,j: B_i \in \mathcal{A}$ and $B_i \cap \B_j = \Phi$ and $\union_{j=1}^n B_j = \mathcal{X}$ )
+From these distributions the distribution for arbitrary sequence $A_1, \ldots, A_n \in \mathcal{A}$ can be uniquely determined.
+We are almost ready to give a formal definition for Dirichlet distribution, it only remains
+the parameter of the process which should be a non-null finite measure on $\mathcal{X}$. We use $\alpha$ to denote the parameter.
+
+We say a random process $Q$ is a Dirichlet process with parameter $\alpha$ if for every finite measurable portioning $B_1, \ldots, B_n$
+the distribution of $(P(B_1), \ldots, P(B_n))$ is  Dirichlet with parameter $(\alpha(B_1), \ldots, \alpha(B_n))$.
+
+An interesting property of Dirichlet distribution that can be considered a version of large support desired property is stated below.
+
+Let $Q$ be a Dirichlet distribution, then for every fixed probability measure $T$ on $\mathcal{X}$ sequence of measurable sets
+$A_1, \ldots, A_n \in \mathcal{A}$ and for every $\epsilon > 0$:
+\begin{equation}
+  \mathbb{P}(|P(A_i) - T(A_i) <\epsilon) > 0
+\end{equation}
+
+The following theorem ensures the posterior manageability for the Dirichlet process too,
+
+\textbf{Therom 1} Let $P$ be a Dirichlet process on $(\mathcal{X},\mathcal{A})$ with parameter $\alpha $ and let $X_1,\ldots, X_n$
+be a sample of size $n$ from $P$.
+Then conditional distribution of $P$ given $ X_1, \ldots , X_n$, is a Dirichlet process with parameter $\alpha + \sum_{1}^n \delta_{X_i}$.
+
+
+
 
 \section{Dirichlet Process}
 
 \section{Sampling}
 
-\section{Guassian Process}
+\section{Gaussian Process}
 
 \end{document}
