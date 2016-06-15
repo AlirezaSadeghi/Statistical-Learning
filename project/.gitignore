@@ -1,0 +1,9 @@
+.ipynb_checkpoints/
+dummy_text/
+*.gz
+dbpedia_csv/
+*~
+*.h5
+*.pyc
+.idea/
+*.npy
