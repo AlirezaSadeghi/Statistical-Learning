@@ -8,8 +8,8 @@ times = []
 A = []
 base_intensity = []
 alphas = [] # shape: n_nodes * n_topics
-phi = [] # shape: n_events * n_words * n_topics
-
+phi = []  # shape: n_events * doc length * n_topics
+docs =[]  # shape: n_events * doc length * n_words
 
 def fdelta(t):
     return (t<3) and 1 or 0;
@@ -26,7 +26,7 @@ I = np.eye(n_topics)
 for i in len(events):
     r[i, 0] = base_intensity[nodes[i]] * multivariate_normal.pdf(topics[i], alphas[nodes[i]], sigma2*I)
     for j in len(events):
-        if j==i: pass 
+        if j==i: pass
         r[i,j] = A[j,i] * multivariate_normal.pdf(topics[i], topics[j], sigma2*I)* fdelta(times[i] - times[j])
 
 
@@ -35,3 +35,6 @@ for n in range(n_nodes):
     alphas[n] = np.sum(r[:,0]*topics*([nodes == n]).astype('float'))
 
 # updates for beta
+xt = np.sum(docs, axis=2)
+beta = sum([np.sum(xt*phi[:,:,k]) for k in range(n_topics)])  # ???????
+

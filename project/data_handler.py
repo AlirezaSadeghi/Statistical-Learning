@@ -1,5 +1,8 @@
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 
+
+doc_dim = 3600
+
 __author__ = 'mohsen'
 import os
 import sklearn
@@ -28,8 +31,6 @@ for i, e in enumerate(edges[:, 0]):
         dest = dest[2:]
     if len(str(dest)) != 7 or len(str(e)) != 7:
         continue
-    e = int(e)
-    dest = int(dest)
     if e in d:
         d[e].append(dest)
     else:
@@ -51,14 +52,15 @@ for k in main_keys:
     s = set(d[k])
     non_sim_data.append(alls.difference(s).pop())
 
-cv = CountVectorizer('filename', stop_words='english')
-count_vectors = cv.fit_transform(['data/abstracts/%s.abs' % id for id in main_keys])
+cv = CountVectorizer('filename', stop_words='english', max_features=doc_dim)
+count_vectors = cv.fit_transform(['data/abstracts/%s.abs' % id for id in doc_ids])
 tf_idf = TfidfTransformer(use_idf=True).fit_transform(count_vectors)
 
 mapping = {}
-for i, key in enumerate(main_keys):
+for i, key in enumerate(doc_ids):
     mapping[key] = i
 
+main_keys = [mapping[k] for k in main_keys]
 sim1_data = [mapping[k] for k in sim1_data]
 sim2_data = [mapping[k] for k in sim2_data]
 sim3_data = [mapping[k] for k in sim3_data]

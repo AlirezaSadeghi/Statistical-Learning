@@ -2,12 +2,13 @@ import numpy as np
 from keras.layers import Dense, Input, Lambda
 from keras.models import Sequential, Model
 import keras.backend as K
-from data_handler import main_keys, tf_idf, sim1_data, sim2_data, sim3_data, non_sim_data
+from sklearn.preprocessing.data import normalize
+
+from data_handler import main_keys, tf_idf, sim1_data, sim2_data, sim3_data, non_sim_data, doc_dim
 
 __author__ = 'mohsen'
 
 
-doc_dim = 300  # 300 is dummy
 hidden_dim = 128
 
 def euclidean_distance(vects):
@@ -29,9 +30,9 @@ def create_base_network(input_dim):
     '''
     # TODO: replace with an RNN
     seq = Sequential()
-    seq.add(Dense(128, input_shape=(input_dim,), activation='relu'))
-    seq.add(Dense(128, activation='relu'))
-    seq.add(Dense(hidden_dim, activation='relu'))
+    seq.add(Dense(128, input_shape=(input_dim,), activation='sigmoid'))
+    # seq.add(Dense(128, activation='sigmoid'))
+    seq.add(Dense(hidden_dim, activation='sigmoid'))
     return seq
 
 
@@ -74,8 +75,10 @@ model = Model(input=[main_in, sim1_in, sim2_in, sim3_in, nonsim1_in],
 
 model.compile('sgd', loss=['mse'] + [contrastive_loss]*4)
 
-
-x_train = [tf_idf[main_keys], tf_idf[sim1_data], tf_idf[sim2_data], tf_idf[sim3_data], tf_idf[non_sim_data]]
+tf_idf = tf_idf.toarray()
+tf_idf = normalize(tf_idf, copy=False) + 1e-5
+x_train = [tf_idf[main_keys], tf_idf[sim1_data],
+           tf_idf[sim2_data], tf_idf[sim3_data], tf_idf[non_sim_data]]
 z = np.zeros_like(main_keys)
 
 output = [tf_idf[main_keys], z, z, z, np.ones_like(main_keys)]
