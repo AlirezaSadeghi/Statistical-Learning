@@ -1,8 +1,14 @@
+import numpy as np
 from keras.layers import Dense, Input, Lambda
 from keras.models import Sequential, Model
 import keras.backend as K
+from sklearn.preprocessing.data import normalize
 
-doc_dim = 300  # 300 is dummy
+from data_handler import main_keys, tf_idf, sim1_data, sim2_data, sim3_data, non_sim_data, doc_dim
+
+__author__ = 'mohsen'
+
+
 hidden_dim = 128
 
 
@@ -15,13 +21,18 @@ def eucl_dist_output_shape(shapes):
     shape1, shape2 = shapes
     return shape1[0], 1
 
+def contrastive_loss(y, d):
+    margin = 1
+    return K.mean(y * K.square(d) + (1 - y) * K.square(K.maximum(margin - d, 0)))
+
+
 
 def create_base_network(input_dim):
     # TODO: replace with an RNN
     seq = Sequential()
-    seq.add(Dense(128, input_shape=(input_dim,), activation='relu'))
-    seq.add(Dense(128, activation='relu'))
-    seq.add(Dense(hidden_dim, activation='relu'))
+    seq.add(Dense(128, input_shape=(input_dim,), activation='sigmoid'))
+    # seq.add(Dense(128, activation='sigmoid'))
+    seq.add(Dense(hidden_dim, activation='sigmoid'))
     return seq
 
 
@@ -66,6 +77,14 @@ reconstruction = decoder(topic_main)
 model = Model(input=[main_in, sim1_in, sim2_in, sim3_in, nonsim1_in],
               output=[reconstruction, dist1, dist2, dist3, dist_non])
 
-model.compile('sgd', loss=['mse'] * 4 + [non_sim_loss])
+model.compile('sgd', loss=['mse'] + [contrastive_loss]*4)
 
-# model.fit(xtrain, y_train)
+tf_idf = tf_idf.toarray()
+tf_idf = normalize(tf_idf, copy=False) + 1e-5
+x_train = [tf_idf[main_keys], tf_idf[sim1_data],
+           tf_idf[sim2_data], tf_idf[sim3_data], tf_idf[non_sim_data]]
+z = np.zeros_like(main_keys)
+
+output = [tf_idf[main_keys], z, z, z, np.ones_like(main_keys)]
+model.fit(x_train, output)
+
